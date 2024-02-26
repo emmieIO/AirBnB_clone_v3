@@ -11,6 +11,7 @@ from . import app_views
 def get_status():
     return jsonify({"status": "OK"})
 
+
 @app_views.route("/stats", methods=["GET"])
 def count():
     """Returns the numbers of the models"""
