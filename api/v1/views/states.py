@@ -2,20 +2,20 @@
 """This is the states view"""
 from flask import Flask, jsonify, request, abort
 from api.v1.views import app_views
-from models import storage, State
+from models import storage, state
 
 
 @app_views.route('/states', methods=['GET'])
 def get_states():
     """Get all states"""
-    states = storage.all(State).values()
+    states = storage.all(state).values()
     return jsonify([state.to_dict() for state in states])
 
 
 @app_views.route('/states/<state_id>', methods=['GET'])
 def get_state(state_id):
     "Get a single state"
-    state = storage.get(State, state_id)
+    state = storage.get(state, state_id)
     if not state:
         abort(404)
     return jsonify(state.to_dict())
@@ -23,8 +23,8 @@ def get_state(state_id):
 
 @app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
-    """Delete State"""
-    state = storage.get(State, state_id)
+    """Delete state"""
+    state = storage.get(state, state_id)
     if not state:
         abort(404)
     storage.delete(state)
@@ -40,15 +40,15 @@ def create_state():
     if 'name' not in request.json:
         abort(400, "Missing name")
     data = request.get_json()
-    new_state = State(**data)
+    new_state = state(**data)
     new_state.save()
     return jsonify(new_state.to_dict()), 201
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
-    """Update State"""
-    state = storage.get(State, state_id)
+    """Update state"""
+    state = storage.get(state, state_id)
     if not state:
         abort(404)
     if not request.json:
