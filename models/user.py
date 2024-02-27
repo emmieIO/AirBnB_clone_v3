@@ -30,6 +30,7 @@ class User(BaseModel, Base):
         super().__init__(*args, **kwargs)
         
     @password.setter
-    def password(self, pwd):
+    def password(self, passwrd):
         """hashing password values"""
-        self.password = md5(pwd.encode()).hexdigest()
+        self.password = md5(passwrd.encode()).hexdigest()
+ 
